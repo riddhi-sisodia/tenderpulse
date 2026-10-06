@@ -161,21 +161,7 @@ TenderPulse **only accesses publicly available government procurement notices** 
 
 ---
 
-## 👥 Team
 
-| Name | Role | Contact |
-|---|---|---|
-| **Riddhi Sisodia** | Team Leader / Full-Stack | +91 98990 31562 |
-| **Ansh Kaushik** | Co-Developer | +91 70650 37134 |
-
----
-
-## 🏆 Hackathon Context
-
-**Event:** HackIIITD (IIIT Delhi)  
-**Platform:** Unstop  
-**Round:** 1 — Online Idea Submission (PPT/PDF)  
-**Problem Statement:** Self-chosen — B2B Procurement Intelligence
 
 ---
 
