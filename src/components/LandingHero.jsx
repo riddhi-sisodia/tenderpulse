@@ -1,546 +1,427 @@
 import React, { useState } from 'react';
-import { 
-  Radio, 
-  ArrowRight, 
-  Store, 
-  Rocket, 
-  HardHat, 
-  ShieldCheck, 
-  CheckCircle2, 
-  AlertTriangle, 
-  Zap, 
-  Sparkles, 
-  Clock, 
-  FileText, 
-  Award, 
-  Search, 
-  Check, 
-  HelpCircle,
-  TrendingUp,
-  Building,
-  RefreshCw,
-  Coins
+import {
+  ArrowRight, Store, Rocket, HardHat, ShieldCheck,
+  CheckCircle2, AlertTriangle, Zap, Check, HelpCircle, Coins
 } from 'lucide-react';
 
-export default function LandingHero({ onStartFunnel, onSelectPersona }) {
-  const [tenderValueSlider, setTenderValueSlider] = useState(150); // In Lakhs
+const CONTENT = {
+  en: {
+    badge: '🇮🇳 Government Procurement AI',
+    headline: ['Win High-Value', 'Government Tenders', 'Without a Legal Team'],
+    sub: 'India publishes ₹40 Lakh Crore in tenders yearly. TenderPulse finds your match in seconds.',
+    cta: 'Find My Matched Tenders',
+    howLabel: 'How It Works',
+    processTitle: 'Procurement Made Effortless',
+    processSub: 'Four steps. Zero paperwork. Zero prior experience needed.',
+    steps: [
+      {
+        n: '1', color: '#FF9933', bg: '#fff8ef',
+        title: 'Tell Us What You Supply',
+        highlight: '⏱ Takes less than 30 seconds'
+      },
+      {
+        n: '2', color: '#138808', bg: '#f0faf0',
+        title: 'TinyFish Monitors 15+ Portals',
+        highlight: '🤖 97% HTML bloat eliminated'
+      },
+      {
+        n: '3', color: '#b06000', bg: '#fffbef',
+        title: 'Instant Qualification Verdict',
+        highlight: '📋 Saves 10+ hours per bid'
+      },
+      {
+        n: '4', color: '#c0392b', bg: '#fff5f5',
+        title: 'Corrigendum Watchdog',
+        highlight: '🛡 Zero accidental disqualifications'
+      }
+    ],
+    personaTitle: 'Select Your Business Type',
+    personas: [
+      {
+        id: 'small-biz', icon: <Store style={{width:22,height:22}}/>, color:'#FF9933',
+        badge:'🏪 Small Vendor / MSME',
+        heading: '"I supply stationery, hardware, or cleaning materials"',
+        highlight: '100% EMD waiver for MSME registered businesses'
+      },
+      {
+        id: 'startup', icon: <Rocket style={{width:22,height:22}}/>, color:'#e07800',
+        badge:'🚀 DPIIT Tech Startup',
+        heading: '"We build software, AI, cloud apps, or electronics"',
+        highlight: '100% EMD waived + turnover rules relaxed under GFR Rule 170',
+        featured: true
+      },
+      {
+        id: 'contractor', icon: <HardHat style={{width:22,height:22}}/>, color:'#138808',
+        badge:'🏢 Established Contractor',
+        heading: '"We bid on construction, solar, or railway infra"',
+        highlight: 'Live corrigenda alerts across IREPS and state PWDs'
+      }
+    ],
+    emdTitle: 'Calculate Your EMD Savings',
+    emdSub: 'Under GFR Rule 170, MSMEs & DPIIT Startups pay ₹0 EMD deposit.',
+    emdLabel: 'Target Tender Value',
+    emdSaved: 'Your Cash Saved',
+    ctaBanner: 'Ready to Discover Your Next Government Contract?',
+    ctaBtn: 'Set Up Business Profile'
+  },
+  hi: {
+    badge: '🇮🇳 सरकारी खरीद AI',
+    headline: ['बड़े सरकारी टेंडर जीतें', 'बिना किसी कानूनी टीम के'],
+    sub: 'भारत हर साल ₹40 लाख करोड़ के टेंडर प्रकाशित करता है। TenderPulse आपका मिलान सेकंडों में करता है।',
+    cta: 'मेरे मिलान वाले टेंडर खोजें',
+    howLabel: 'यह कैसे काम करता है',
+    processTitle: 'खरीद प्रक्रिया अब आसान',
+    processSub: 'चार कदम। शून्य कागजी कार्रवाई। कोई पूर्व अनुभव आवश्यक नहीं।',
+    steps: [
+      {
+        n: '1', color: '#FF9933', bg: '#fff8ef',
+        title: 'बताएं आप क्या आपूर्ति करते हैं',
+        highlight: '⏱ 30 सेकंड से भी कम समय लगता है'
+      },
+      {
+        n: '2', color: '#138808', bg: '#f0faf0',
+        title: 'TinyFish 15+ पोर्टल की निगरानी करता है',
+        highlight: '🤖 97% HTML अव्यवस्था समाप्त'
+      },
+      {
+        n: '3', color: '#b06000', bg: '#fffbef',
+        title: 'तत्काल पात्रता निर्णय',
+        highlight: '📋 प्रति बोली 10+ घंटे बचाता है'
+      },
+      {
+        n: '4', color: '#c0392b', bg: '#fff5f5',
+        title: 'संशोधन निगरानी (Corrigendum Watchdog)',
+        highlight: '🛡 कोई आकस्मिक अयोग्यता नहीं'
+      }
+    ],
+    personaTitle: 'अपना व्यवसाय प्रकार चुनें',
+    personas: [
+      {
+        id: 'small-biz', icon: <Store style={{width:22,height:22}}/>, color:'#FF9933',
+        badge:'🏪 छोटे विक्रेता / MSME',
+        heading: '"मैं स्टेशनरी, हार्डवेयर या सफाई सामग्री की आपूर्ति करता हूं"',
+        highlight: 'MSME पंजीकृत व्यवसायों के लिए 100% EMD छूट'
+      },
+      {
+        id: 'startup', icon: <Rocket style={{width:22,height:22}}/>, color:'#e07800',
+        badge:'🚀 DPIIT टेक स्टार्टअप',
+        heading: '"हम सॉफ्टवेयर, AI, क्लाउड ऐप या इलेक्ट्रॉनिक्स बनाते हैं"',
+        highlight: '100% EMD माफ + GFR नियम 170 के तहत टर्नओवर नियम शिथिल',
+        featured: true
+      },
+      {
+        id: 'contractor', icon: <HardHat style={{width:22,height:22}}/>, color:'#138808',
+        badge:'🏢 स्थापित ठेकेदार',
+        heading: '"हम निर्माण, सौर, या रेलवे इंफ्रा पर बोली लगाते हैं"',
+        highlight: 'IREPS और राज्य PWD में लाइव संशोधन अलर्ट'
+      }
+    ],
+    emdTitle: 'अपनी EMD बचत की गणना करें',
+    emdSub: 'GFR नियम 170 के तहत, MSME और DPIIT स्टार्टअप ₹0 EMD जमा करते हैं।',
+    emdLabel: 'लक्षित टेंडर मूल्य',
+    emdSaved: 'आपकी बचत',
+    ctaBanner: 'अपना अगला सरकारी अनुबंध खोजने के लिए तैयार हैं?',
+    ctaBtn: 'व्यवसाय प्रोफ़ाइल सेट करें'
+  }
+};
 
-  // EMD is generally 2% to 5% of tender value in India
-  const estimatedEmdSavings = Math.round(tenderValueSlider * 0.02 * 100) / 100;
+export default function LandingHero({ onStartFunnel, onSelectPersona }) {
+  const [lang, setLang] = useState('en');
+  const [tenderValueSlider, setTenderValueSlider] = useState(150);
+  const t = CONTENT[lang];
+  const emdSavings = Math.round(tenderValueSlider * 0.02 * 100) / 100;
 
   return (
-    <div className="space-y-14 py-4 animate-in fade-in duration-300">
-      
-      {/* 1. HERO BANNER: WARM INDIAN GOVERNMENT PROCUREMENT AESTHETICS */}
-      <section className="relative overflow-hidden rounded-3xl bg-gradient-to-br from-sandstone-100 via-white to-sandstone-100/60 border border-sandstone-200 p-8 sm:p-12 shadow-sm">
-        
-        {/* Decorative subtle saffron & green glowing gradients */}
-        <div className="absolute top-0 right-0 -mr-16 -mt-16 w-80 h-80 rounded-full bg-saffron-500/10 blur-3xl pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 -ml-16 -mb-16 w-80 h-80 rounded-full bg-indiaGreen-500/10 blur-3xl pointer-events-none"></div>
+    <div style={{display:'flex', flexDirection:'column', gap:48, paddingTop:8}}>
 
-        <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
-          
-          <div className="lg:col-span-7 space-y-6">
-            
-            {/* Authorized Badges */}
-            <div className="flex flex-wrap items-center gap-2">
-              <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-bold bg-saffron-100 text-saffron-900 border border-saffron-300">
-                <span className="text-sm">🇮🇳</span>
-                <span>Government of India Procurement AI</span>
-              </span>
-              <span className="inline-flex items-center gap-1 px-3 py-1 rounded-full text-xs font-bold bg-indiaGreen-100 text-indiaGreen-900 border border-indiaGreen-300">
-                <CheckCircle2 className="w-3.5 h-3.5 text-indiaGreen-700" />
-                <span>Make in India & DPIIT Aligned</span>
-              </span>
-            </div>
+      {/* ── LANG TOGGLE ── */}
+      <div style={{display:'flex', justifyContent:'flex-end'}}>
+        <div style={{
+          display:'flex', alignItems:'center', gap:4,
+          background:'#f5f0e8', borderRadius:10, padding:4,
+          border:'1px solid #e0d5c0'
+        }}>
+          {['en','hi'].map(l => (
+            <button key={l} onClick={() => setLang(l)} style={{
+              padding:'5px 14px', borderRadius:7, fontWeight:700, fontSize:12,
+              background: lang === l ? '#FF9933' : 'transparent',
+              color: lang === l ? '#fff' : '#888',
+              border: 'none', cursor:'pointer', transition:'all 0.15s',
+              letterSpacing: l === 'hi' ? '0.3px' : 0
+            }}>
+              {l === 'en' ? 'English' : 'हिंदी'}
+            </button>
+          ))}
+        </div>
+      </div>
 
-            {/* Main Headline */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-slate-900 tracking-tight leading-[1.15]">
-              Win High-Value <span className="text-saffron-600 underline decoration-saffron-300 decoration-wavy">Government Tenders</span> Without a Legal Team
+      {/* ── HERO ── */}
+      <section style={{
+        background: 'linear-gradient(135deg, #fffbf5 0%, #fff 50%, #f5fff5 100%)',
+        border: '1px solid #e8dfc8', borderRadius: 24, padding: '48px 40px',
+        position: 'relative', overflow: 'hidden'
+      }}>
+        {/* decorative blobs */}
+        <div style={{position:'absolute',top:-60,right:-60,width:240,height:240,borderRadius:'50%',background:'rgba(255,153,51,0.08)',filter:'blur(40px)',pointerEvents:'none'}}/>
+        <div style={{position:'absolute',bottom:-60,left:-60,width:240,height:240,borderRadius:'50%',background:'rgba(19,136,8,0.07)',filter:'blur(40px)',pointerEvents:'none'}}/>
+
+        <div style={{display:'grid', gridTemplateColumns:'1fr auto', gap:40, alignItems:'center', position:'relative', zIndex:1}}>
+          <div>
+            <span style={{
+              display:'inline-block', fontSize:11, fontWeight:700,
+              background:'#fff8ef', color:'#c06000',
+              border:'1px solid #ffd799', borderRadius:20,
+              padding:'3px 12px', marginBottom:16
+            }}>
+              {t.badge}
+            </span>
+
+            <h1 style={{fontSize:40, fontWeight:900, lineHeight:1.15, color:'#1a1a1a', margin:'0 0 16px', letterSpacing:'-1px'}}>
+              {t.headline.map((line, i) => (
+                <span key={i} style={{display:'block', color: i === 1 ? '#FF9933' : '#1a1a1a'}}>
+                  {line}
+                </span>
+              ))}
             </h1>
 
-            {/* Clear Subtitle */}
-            <p className="text-base sm:text-lg text-slate-600 leading-relaxed font-normal max-w-2xl">
-              India publishes over <strong className="text-slate-900 font-bold">₹40 Lakh Crore</strong> worth of public tenders every year on GeM, CPPP, and Railways. 
-              TenderPulse monitors them 24/7, verifies your eligibility in 10 seconds, and ensures you never miss a sudden midnight amendment.
+            <p style={{fontSize:15, color:'#666', maxWidth:520, lineHeight:1.6, margin:'0 0 28px'}}>
+              {t.sub}
             </p>
 
-            {/* CTA Buttons */}
-            <div className="pt-2 flex flex-wrap items-center gap-4">
-              <button
-                onClick={onStartFunnel}
-                className="px-7 py-3.5 bg-gradient-to-r from-saffron-500 to-saffron-600 hover:from-saffron-600 hover:to-saffron-700 text-white font-extrabold text-sm rounded-xl transition shadow-lg shadow-saffron-500/25 flex items-center gap-2 cursor-pointer active:scale-95"
-              >
-                <span>Find Your Matched Tenders</span>
-                <ArrowRight className="w-4 h-4" />
+            <div style={{display:'flex', gap:12, flexWrap:'wrap'}}>
+              <button onClick={onStartFunnel} style={{
+                display:'flex', alignItems:'center', gap:8,
+                padding:'12px 24px', borderRadius:12,
+                background:'linear-gradient(135deg, #FF9933, #e07800)',
+                color:'#fff', fontWeight:800, fontSize:13, border:'none',
+                cursor:'pointer', boxShadow:'0 4px 14px rgba(255,153,51,0.4)'
+              }}>
+                {t.cta} <ArrowRight style={{width:15,height:15}}/>
               </button>
-
-              <button
-                onClick={() => {
-                  const el = document.getElementById('how-it-works-section');
-                  if (el) el.scrollIntoView({ behavior: 'smooth' });
-                }}
-                className="px-5 py-3.5 bg-white hover:bg-sandstone-100 text-slate-800 font-bold text-sm rounded-xl transition border border-sandstone-300 shadow-2xs flex items-center gap-2 cursor-pointer"
-              >
-                <span>How Does It Work?</span>
-                <HelpCircle className="w-4 h-4 text-saffron-600" />
+              <button onClick={() => document.getElementById('how-it-works')?.scrollIntoView({behavior:'smooth'})} style={{
+                display:'flex', alignItems:'center', gap:8,
+                padding:'12px 20px', borderRadius:12,
+                background:'#fff', color:'#444', fontWeight:700, fontSize:13,
+                border:'1px solid #ddd', cursor:'pointer'
+              }}>
+                {t.howLabel} <HelpCircle style={{width:14,height:14,color:'#FF9933'}}/>
               </button>
             </div>
 
-            {/* Micro Trust Indicators */}
-            <div className="pt-4 border-t border-sandstone-200/80 flex flex-wrap items-center gap-6 text-xs text-slate-600 font-semibold">
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-indiaGreen-500"></span>
-                <span>Rule 170 GFR EMD Waivers</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-saffron-500"></span>
-                <span>GeM & CPPP Live Sync</span>
-              </div>
-              <div className="flex items-center gap-2">
-                <span className="w-2 h-2 rounded-full bg-ashokaGold-500"></span>
-                <span>Zero Prior Experience for Startups</span>
-              </div>
-            </div>
-
-          </div>
-
-          {/* Visual Showcase Graphic: Real Indian Tender Card Preview */}
-          <div className="lg:col-span-5">
-            <div className="relative mx-auto max-w-md bg-white rounded-2xl border-2 border-sandstone-300 shadow-xl overflow-hidden">
-              
-              {/* Card Header Strip */}
-              <div className="bg-gradient-to-r from-saffron-600 to-saffron-700 p-4 text-white">
-                <div className="flex items-center justify-between text-xs font-bold">
-                  <span className="flex items-center gap-1.5">
-                    <span className="w-2 h-2 rounded-full bg-white animate-pulse"></span>
-                    <span>LIVE GE M TENDER • VERIFIED</span>
-                  </span>
-                  <span className="bg-white/20 px-2 py-0.5 rounded text-[10px]">
-                    GEM/2026/B/894102
-                  </span>
+            <div style={{display:'flex', gap:20, marginTop:24, paddingTop:20, borderTop:'1px solid #e8dfc8', flexWrap:'wrap'}}>
+              {[['#138808','Rule 170 GFR EMD Waivers'],['#FF9933','GeM & CPPP Live Sync'],['#b06000','Zero Experience for Startups']].map(([c,l])=>(
+                <div key={l} style={{display:'flex',alignItems:'center',gap:6,fontSize:11,fontWeight:600,color:'#555'}}>
+                  <span style={{width:7,height:7,borderRadius:'50%',background:c,flexShrink:0}}/>
+                  {l}
                 </div>
-                <h4 className="font-bold text-sm mt-1.5 line-clamp-1">
-                  Cloud AI Analytics for National Informatics Centre
-                </h4>
-              </div>
-
-              {/* Card Body */}
-              <div className="p-5 space-y-4 text-xs">
-                
-                {/* Tender Numbers */}
-                <div className="grid grid-cols-2 gap-3 bg-sandstone-50 p-3 rounded-xl border border-sandstone-200">
-                  <div>
-                    <span className="text-slate-500 text-[10px] block font-medium">Estimated Value</span>
-                    <span className="text-base font-extrabold text-slate-900">₹1.85 Crore</span>
-                  </div>
-                  <div>
-                    <span className="text-slate-500 text-[10px] block font-medium">EMD Security Deposit</span>
-                    <span className="text-xs font-bold text-indiaGreen-700 flex items-center gap-1 mt-0.5">
-                      <Check className="w-3.5 h-3.5" />
-                      ₹0 (100% Waived)
-                    </span>
-                  </div>
-                </div>
-
-                {/* Instant Verdict Badges */}
-                <div className="space-y-2">
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-indiaGreen-50 border border-indiaGreen-200 text-indiaGreen-900 font-semibold">
-                    <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="w-4 h-4 text-indiaGreen-600" />
-                      <span>Turnover Rule (₹1.2 Cr required)</span>
-                    </span>
-                    <span className="text-[11px] font-extrabold text-indiaGreen-700">Passed ✅</span>
-                  </div>
-
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-indiaGreen-50 border border-indiaGreen-200 text-indiaGreen-900 font-semibold">
-                    <span className="flex items-center gap-1.5">
-                      <CheckCircle2 className="w-4 h-4 text-indiaGreen-600" />
-                      <span>3-Year Experience Rule</span>
-                    </span>
-                    <span className="text-[11px] font-extrabold text-indiaGreen-700">Exempt for DPIIT ✅</span>
-                  </div>
-
-                  <div className="flex items-center justify-between p-2 rounded-lg bg-saffron-50 border border-saffron-200 text-saffron-900 font-semibold">
-                    <span className="flex items-center gap-1.5">
-                      <AlertTriangle className="w-4 h-4 text-saffron-600" />
-                      <span>Corrigendum-II Detected</span>
-                    </span>
-                    <span className="text-[10px] font-bold bg-saffron-200/80 px-1.5 py-0.5 rounded text-saffron-900">
-                      Deadline +4 Days
-                    </span>
-                  </div>
-                </div>
-
-                {/* Overall Score */}
-                <div className="pt-2 flex items-center justify-between border-t border-sandstone-200">
-                  <div className="flex items-center gap-2">
-                    <div className="w-8 h-8 rounded-full bg-indiaGreen-600 text-white font-extrabold flex items-center justify-center text-xs">
-                      94%
-                    </div>
-                    <div>
-                      <span className="font-extrabold text-slate-900 block text-xs">High Win Probability</span>
-                      <span className="text-[10px] text-slate-500">TinyFish verified 8 mins ago</span>
-                    </div>
-                  </div>
-
-                  <span className="px-2.5 py-1 bg-saffron-600 text-white font-bold text-[11px] rounded-lg shadow-2xs">
-                    Inspect Clauses
-                  </span>
-                </div>
-
-              </div>
-
+              ))}
             </div>
           </div>
 
+          {/* Live tender preview card */}
+          <div style={{minWidth:280, maxWidth:310}}>
+            <div style={{background:'#fff', border:'2px solid #e8dfc8', borderRadius:16, overflow:'hidden', boxShadow:'0 8px 32px rgba(0,0,0,0.08)'}}>
+              <div style={{background:'linear-gradient(135deg,#FF9933,#e07800)', padding:'14px 16px', color:'#fff'}}>
+                <div style={{display:'flex',justifyContent:'space-between',fontSize:10,fontWeight:700,marginBottom:6,opacity:0.9}}>
+                  <span>● LIVE GeM TENDER</span>
+                  <span>GEM/2026/B/894102</span>
+                </div>
+                <div style={{fontSize:12,fontWeight:700,lineHeight:1.3}}>Cloud AI Analytics — National Informatics Centre</div>
+              </div>
+              <div style={{padding:14, display:'flex', flexDirection:'column', gap:10, fontSize:11}}>
+                <div style={{display:'grid',gridTemplateColumns:'1fr 1fr',gap:8,background:'#fdf6ee',padding:10,borderRadius:10}}>
+                  <div>
+                    <div style={{color:'#999',fontSize:9,fontWeight:600,marginBottom:2}}>Estimated Value</div>
+                    <div style={{fontWeight:800,fontSize:15,color:'#1a1a1a'}}>₹1.85 Cr</div>
+                  </div>
+                  <div>
+                    <div style={{color:'#999',fontSize:9,fontWeight:600,marginBottom:2}}>EMD Deposit</div>
+                    <div style={{fontWeight:700,color:'#138808',fontSize:12}}>✓ ₹0 Waived</div>
+                  </div>
+                </div>
+                {[['✓','Turnover Rule','Passed ✅','#e8f5e9','#138808'],['✓','3-Yr Experience','Exempt (DPIIT) ✅','#e8f5e9','#138808'],['⚠','Corrigendum-II','Deadline +4 Days','#fff8ef','#c06000']].map(([ic,label,val,bg,col])=>(
+                  <div key={label} style={{display:'flex',justifyContent:'space-between',alignItems:'center',padding:'6px 10px',background:bg,borderRadius:8,fontSize:10,fontWeight:600}}>
+                    <span style={{color:col}}>{ic} {label}</span>
+                    <span style={{color:col,fontWeight:700}}>{val}</span>
+                  </div>
+                ))}
+                <div style={{display:'flex',alignItems:'center',justifyContent:'space-between',paddingTop:8,borderTop:'1px solid #eee'}}>
+                  <div style={{display:'flex',alignItems:'center',gap:8}}>
+                    <div style={{width:32,height:32,borderRadius:'50%',background:'#138808',color:'#fff',fontWeight:800,fontSize:10,display:'flex',alignItems:'center',justifyContent:'center'}}>94%</div>
+                    <div style={{fontSize:10,fontWeight:700,color:'#1a1a1a'}}>High Win Probability</div>
+                  </div>
+                  <span style={{background:'#FF9933',color:'#fff',fontSize:10,fontWeight:700,padding:'4px 10px',borderRadius:7}}>Inspect</span>
+                </div>
+              </div>
+            </div>
+          </div>
         </div>
-
       </section>
 
-      {/* 2. THE 4 SIMPLE STEPS: HOW TENDERPULSE WORKS FOR YOU */}
-      <section id="how-it-works-section" className="space-y-8">
-        
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="px-3 py-1 rounded-full text-xs font-bold bg-saffron-100 text-saffron-900 border border-saffron-200 inline-block">
+      {/* ── HOW IT WORKS: 4 STEPS ── */}
+      <section id="how-it-works">
+        <div style={{textAlign:'center', marginBottom:32}}>
+          <span style={{
+            fontSize:11, fontWeight:700, background:'#fff8ef', color:'#c06000',
+            border:'1px solid #ffd799', borderRadius:20, padding:'3px 14px',
+            display:'inline-block', marginBottom:10
+          }}>
             Simple 4-Step Process
           </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-            How Any Indian Business Can Win with TenderPulse
+          <h2 style={{fontSize:28, fontWeight:900, color:'#1a1a1a', margin:'0 0 8px', letterSpacing:'-0.5px'}}>
+            {t.processTitle}
           </h2>
-          <p className="text-sm text-slate-600">
-            Whether you run a local stationery shop, a civil construction firm, or a tech startup — we make public procurement effortless.
+          <p style={{fontSize:13, color:'#888', maxWidth:400, margin:'0 auto'}}>
+            {t.processSub}
           </p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-          
-          {/* Step 1 */}
-          <div className="bg-white border-2 border-sandstone-200 rounded-2xl p-6 space-y-4 hover:border-saffron-500 transition duration-200 shadow-2xs flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-saffron-100 text-saffron-700 font-extrabold text-lg flex items-center justify-center border border-saffron-200">
-                1
+        <div style={{display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:16}}>
+          {t.steps.map((step) => (
+            <div key={step.n} style={{
+              background:'#fff', border:'2px solid #eee', borderRadius:16,
+              padding:20, display:'flex', flexDirection:'column', gap:12,
+              transition:'border-color 0.2s, box-shadow 0.2s'
+            }}
+            onMouseEnter={e=>{e.currentTarget.style.borderColor=step.color; e.currentTarget.style.boxShadow=`0 4px 16px ${step.color}22`;}}
+            onMouseLeave={e=>{e.currentTarget.style.borderColor='#eee'; e.currentTarget.style.boxShadow='none';}}
+            >
+              <div style={{
+                width:40, height:40, borderRadius:10,
+                background:step.bg, color:step.color,
+                fontWeight:900, fontSize:18,
+                display:'flex', alignItems:'center', justifyContent:'center',
+                border:`1.5px solid ${step.color}33`
+              }}>
+                {step.n}
               </div>
-              <h3 className="text-base font-bold text-slate-900">
-                Tell Us What You Supply
+              <h3 style={{fontSize:13, fontWeight:800, color:'#1a1a1a', margin:0, lineHeight:1.35}}>
+                {step.title}
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Enter your business name, approximate annual turnover, and Udyam or Startup certificate. No complicated legal paperwork needed.
-              </p>
-            </div>
-            <div className="pt-3 border-t border-sandstone-100 text-[11px] text-saffron-700 font-bold flex items-center gap-1">
-              <span>Takes less than 30 seconds</span>
-              <Check className="w-3.5 h-3.5 text-indiaGreen-600" />
-            </div>
-          </div>
-
-          {/* Step 2 */}
-          <div className="bg-white border-2 border-sandstone-200 rounded-2xl p-6 space-y-4 hover:border-saffron-500 transition duration-200 shadow-2xs flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-indiaGreen-100 text-indiaGreen-800 font-extrabold text-lg flex items-center justify-center border border-indiaGreen-200">
-                2
+              {/* HIGHLIGHTED STAT ONLY — no paragraph text */}
+              <div style={{
+                fontSize:11, fontWeight:700, color:step.color,
+                background:step.bg, padding:'6px 10px', borderRadius:8,
+                border:`1px solid ${step.color}22`, marginTop:'auto'
+              }}>
+                {step.highlight}
               </div>
-              <h3 className="text-base font-bold text-slate-900">
-                TinyFish Monitors 15+ Portals
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                TinyFish AI crawls GeM, CPPP, Indian Railways (IREPS), and state e-tender portals 24/7, extracting active bids and bypassing complex ASP.NET tables.
-              </p>
             </div>
-            <div className="pt-3 border-t border-sandstone-100 text-[11px] text-indiaGreen-800 font-bold flex items-center gap-1">
-              <span>97% HTML bloat eliminated</span>
-              <Zap className="w-3.5 h-3.5 text-saffron-600" />
-            </div>
-          </div>
-
-          {/* Step 3 */}
-          <div className="bg-white border-2 border-sandstone-200 rounded-2xl p-6 space-y-4 hover:border-saffron-500 transition duration-200 shadow-2xs flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-ashokaGold-100 text-ashokaGold-800 font-extrabold text-lg flex items-center justify-center border border-ashokaGold-200">
-                3
-              </div>
-              <h3 className="text-base font-bold text-slate-900">
-                Instant Qualification Verdict
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Our AI compares the 80-page tender clauses against your company size. Get green flags for turnover, certifications, and 100% EMD fee waivers.
-              </p>
-            </div>
-            <div className="pt-3 border-t border-sandstone-100 text-[11px] text-ashokaGold-800 font-bold flex items-center gap-1">
-              <span>Saves 10+ hours per bid</span>
-              <Check className="w-3.5 h-3.5 text-indiaGreen-600" />
-            </div>
-          </div>
-
-          {/* Step 4 */}
-          <div className="bg-white border-2 border-sandstone-200 rounded-2xl p-6 space-y-4 hover:border-saffron-500 transition duration-200 shadow-2xs flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-saffron-100 text-saffron-700 font-extrabold text-lg flex items-center justify-center border border-saffron-200">
-                4
-              </div>
-              <h3 className="text-base font-bold text-slate-900">
-                Corrigendum Watchdog
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                If the government silently releases an amendment or extends a deadline 2 days before closing, TinyFish alerts you immediately so you never get disqualified.
-              </p>
-            </div>
-            <div className="pt-3 border-t border-sandstone-100 text-[11px] text-saffron-700 font-bold flex items-center gap-1">
-              <span>Zero accidental disqualifications</span>
-              <ShieldCheck className="w-3.5 h-3.5 text-indiaGreen-600" />
-            </div>
-          </div>
-
+          ))}
         </div>
-
       </section>
 
-      {/* 3. WHO IS THIS FOR? CHOOSE YOUR BUSINESS TYPE */}
-      <section className="space-y-8 bg-sandstone-100/70 rounded-3xl p-6 sm:p-10 border border-sandstone-300">
-        
-        <div className="text-center max-w-2xl mx-auto space-y-2">
-          <span className="px-3 py-1 rounded-full text-xs font-bold bg-white text-slate-800 border border-sandstone-300 inline-block shadow-2xs">
-            Tailored For Your Size
-          </span>
-          <h2 className="text-2xl sm:text-3xl font-extrabold text-slate-900">
-            Select Your Business Persona
-          </h2>
-          <p className="text-xs sm:text-sm text-slate-600">
-            TenderPulse adapts its matching rules and exemption logic based on your company classification:
-          </p>
+      {/* ── PERSONA SELECTOR ── */}
+      <section style={{background:'#fdf6ee', borderRadius:24, padding:'40px 36px', border:'1px solid #e8dfc8'}}>
+        <div style={{textAlign:'center', marginBottom:28}}>
+          <h2 style={{fontSize:24, fontWeight:900, color:'#1a1a1a', margin:'0 0 6px'}}>{t.personaTitle}</h2>
+          <p style={{fontSize:12, color:'#888', margin:0}}>TenderPulse adapts its rules based on your company type</p>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-          
-          {/* Persona 1: Small Vendor */}
-          <div 
-            onClick={() => onSelectPersona('small-biz')}
-            className="bg-white border-2 border-sandstone-300 hover:border-saffron-500 rounded-2xl p-6 space-y-4 transition duration-200 hover:shadow-lg cursor-pointer group flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-saffron-50 text-saffron-600 flex items-center justify-center font-bold border border-saffron-200 group-hover:scale-105 transition">
-                <Store className="w-6 h-6" />
+        <div style={{display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16}}>
+          {t.personas.map(p => (
+            <div key={p.id} onClick={() => onSelectPersona(p.id)} style={{
+              background:'#fff', borderRadius:16, padding:22,
+              border: p.featured ? `2.5px solid ${p.color}` : '2px solid #e8dfc8',
+              cursor:'pointer', position:'relative', transition:'all 0.2s',
+              boxShadow: p.featured ? `0 4px 20px ${p.color}22` : 'none'
+            }}
+            onMouseEnter={e=>{ e.currentTarget.style.transform='translateY(-2px)'; e.currentTarget.style.boxShadow=`0 8px 24px ${p.color}22`; }}
+            onMouseLeave={e=>{ e.currentTarget.style.transform='none'; e.currentTarget.style.boxShadow= p.featured ? `0 4px 20px ${p.color}22` : 'none'; }}
+            >
+              {p.featured && (
+                <div style={{
+                  position:'absolute', top:12, right:12,
+                  background:p.color, color:'#fff',
+                  fontSize:9, fontWeight:800, padding:'2px 8px', borderRadius:20
+                }}>TOP MATCH</div>
+              )}
+              <div style={{
+                width:40,height:40,borderRadius:10,marginBottom:10,
+                background:`${p.color}15`,color:p.color,
+                display:'flex',alignItems:'center',justifyContent:'center',
+                border:`1.5px solid ${p.color}30`
+              }}>
+                {p.icon}
               </div>
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-saffron-100 text-saffron-800 border border-saffron-200 inline-block">
-                🏪 Small Vendor / MSME
+              <span style={{
+                fontSize:10, fontWeight:700, color:p.color,
+                background:`${p.color}12`, border:`1px solid ${p.color}30`,
+                borderRadius:20, padding:'2px 10px', display:'inline-block', marginBottom:8
+              }}>
+                {p.badge}
               </span>
-              <h3 className="text-lg font-bold text-slate-900 group-hover:text-saffron-700 transition">
-                "I supply office stationery, computer hardware, or cleaning materials"
+              <h3 style={{fontSize:13, fontWeight:700, color:'#1a1a1a', margin:'0 0 10px', lineHeight:1.4}}>
+                {p.heading}
               </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Govt schools, police stations, and civic offices buy supplies every week. TenderPulse surfaces local supply tenders with simple documentation and 100% EMD waiver.
-              </p>
-            </div>
-
-            <div className="pt-4 border-t border-sandstone-100 flex items-center justify-between text-xs text-saffron-700 font-bold group-hover:translate-x-0.5 transition">
-              <span>Try as Small Vendor (Gupta Supplies)</span>
-              <ArrowRight className="w-4 h-4" />
-            </div>
-          </div>
-
-          {/* Persona 2: Tech & AI Startup */}
-          <div 
-            onClick={() => onSelectPersona('startup')}
-            className="bg-white border-2 border-saffron-500 rounded-2xl p-6 space-y-4 transition duration-200 hover:shadow-xl cursor-pointer group flex flex-col justify-between relative overflow-hidden ring-4 ring-saffron-100"
-          >
-            <div className="absolute top-3 right-3 bg-saffron-600 text-white text-[10px] font-bold px-2 py-0.5 rounded-full uppercase">
-              Top Match
-            </div>
-
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-saffron-100 text-saffron-700 flex items-center justify-center font-bold border border-saffron-300 group-hover:scale-105 transition">
-                <Rocket className="w-6 h-6" />
+              {/* HIGHLIGHTED STAT ONLY */}
+              <div style={{
+                fontSize:11, fontWeight:700, color:p.color,
+                background:`${p.color}10`, padding:'6px 10px',
+                borderRadius:8, border:`1px solid ${p.color}20`
+              }}>
+                {p.highlight}
               </div>
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-saffron-100 text-saffron-900 border border-saffron-300 inline-block">
-                🚀 DPIIT Tech Startup
-              </span>
-              <h3 className="text-lg font-bold text-slate-900 group-hover:text-saffron-700 transition">
-                "We build software, AI analytics, cloud apps, or electronics"
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                Under Government Rule 170 GFR 2017, recognized startups get <strong>100% Earnest Money Deposit (EMD) waived</strong> and prior turnover criteria relaxed!
-              </p>
-            </div>
-
-            <div className="pt-4 border-t border-sandstone-100 flex items-center justify-between text-xs text-saffron-700 font-bold group-hover:translate-x-0.5 transition">
-              <span>Try as Tech Startup (ApexCloud)</span>
-              <ArrowRight className="w-4 h-4" />
-            </div>
-          </div>
-
-          {/* Persona 3: Established Contractor */}
-          <div 
-            onClick={() => onSelectPersona('contractor')}
-            className="bg-white border-2 border-sandstone-300 hover:border-indiaGreen-600 rounded-2xl p-6 space-y-4 transition duration-200 hover:shadow-lg cursor-pointer group flex flex-col justify-between"
-          >
-            <div className="space-y-3">
-              <div className="w-12 h-12 rounded-xl bg-indiaGreen-50 text-indiaGreen-700 flex items-center justify-center font-bold border border-indiaGreen-200 group-hover:scale-105 transition">
-                <HardHat className="w-6 h-6" />
+              <div style={{display:'flex',alignItems:'center',justifyContent:'flex-end',marginTop:12,color:p.color,fontSize:11,fontWeight:700}}>
+                Try Demo <ArrowRight style={{width:12,height:12,marginLeft:4}}/>
               </div>
-              <span className="px-2.5 py-0.5 rounded-full text-[11px] font-bold bg-indiaGreen-100 text-indiaGreen-800 border border-indiaGreen-200 inline-block">
-                🏢 Established Contractor
-              </span>
-              <h3 className="text-lg font-bold text-slate-900 group-hover:text-indiaGreen-700 transition">
-                "We bid on construction, solar, or railway infrastructure"
-              </h3>
-              <p className="text-xs text-slate-600 leading-relaxed">
-                TenderPulse monitors daily corrigenda across Indian Railways (IREPS) and state PWDs so your engineering team never misses a clause revision or deadline extension.
-              </p>
             </div>
-
-            <div className="pt-4 border-t border-sandstone-100 flex items-center justify-between text-xs text-indiaGreen-800 font-bold group-hover:translate-x-0.5 transition">
-              <span>Try as Contractor (Malhotra Infra)</span>
-              <ArrowRight className="w-4 h-4" />
-            </div>
-          </div>
-
+          ))}
         </div>
-
       </section>
 
-      {/* 4. INTERACTIVE EMD SAVINGS CALCULATOR (RULE 170 GFR 2017) */}
-      <section className="bg-white rounded-3xl p-8 sm:p-10 border-2 border-sandstone-200 shadow-sm space-y-6">
-        
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+      {/* ── EMD CALCULATOR ── */}
+      <section style={{background:'#fff', border:'2px solid #e8dfc8', borderRadius:24, padding:'36px 40px'}}>
+        <div style={{display:'flex', justifyContent:'space-between', alignItems:'flex-start', flexWrap:'wrap', gap:20, marginBottom:28}}>
           <div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-indiaGreen-100 text-indiaGreen-900 border border-indiaGreen-300 text-xs font-bold mb-2">
-              <Coins className="w-3.5 h-3.5 text-indiaGreen-700" />
-              <span>Make in India Financial Privilege</span>
+            <div style={{display:'inline-flex',alignItems:'center',gap:6,fontSize:11,fontWeight:700,color:'#138808',background:'#e8f5e9',border:'1px solid #c8e6c9',borderRadius:20,padding:'3px 12px',marginBottom:10}}>
+              <Coins style={{width:12,height:12}}/> Make in India Financial Privilege
             </div>
-            <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-              Calculate Your Direct Upfront EMD Cash Savings
-            </h3>
-            <p className="text-xs sm:text-sm text-slate-600 max-w-xl">
-              Under Ministry of Finance Rule 170 of General Financial Rules (GFR), MSMEs & DPIIT startups are completely exempt from paying Earnest Money Deposit.
-            </p>
+            <h3 style={{fontSize:22, fontWeight:900, color:'#1a1a1a', margin:'0 0 6px'}}>{t.emdTitle}</h3>
+            <p style={{fontSize:12, color:'#888', maxWidth:460, margin:0}}>{t.emdSub}</p>
           </div>
-
-          <div className="bg-sandstone-50 border border-sandstone-200 px-5 py-4 rounded-2xl text-center sm:text-right shrink-0">
-            <span className="text-xs text-slate-500 font-semibold block">Your Upfront Cash Saved</span>
-            <span className="text-2xl sm:text-3xl font-extrabold text-indiaGreen-700">
-              ₹{estimatedEmdSavings} Lakhs
-            </span>
-            <span className="text-[10px] text-slate-500 block mt-0.5">Kept in your bank account!</span>
+          <div style={{background:'#f0faf0', border:'1.5px solid #c8e6c9', borderRadius:14, padding:'14px 22px', textAlign:'center', flexShrink:0}}>
+            <div style={{fontSize:11, color:'#888', fontWeight:600, marginBottom:4}}>{t.emdSaved}</div>
+            <div style={{fontSize:28, fontWeight:900, color:'#138808'}}>₹{emdSavings} L</div>
+            <div style={{fontSize:10, color:'#aaa'}}>Kept in your bank account</div>
           </div>
         </div>
 
-        {/* Interactive Slider */}
-        <div className="space-y-3 pt-2">
-          <div className="flex justify-between items-center text-xs font-bold text-slate-700">
-            <span>Target Tender Estimated Value:</span>
-            <span className="text-saffron-700 text-sm font-extrabold bg-saffron-50 px-2 py-0.5 rounded border border-saffron-200">
-              ₹{tenderValueSlider} Lakhs {tenderValueSlider >= 100 ? `(₹${(tenderValueSlider / 100).toFixed(2)} Cr)` : ''}
+        <div>
+          <div style={{display:'flex',justifyContent:'space-between',fontSize:12,fontWeight:700,color:'#444',marginBottom:10}}>
+            <span>{t.emdLabel}:</span>
+            <span style={{color:'#FF9933', background:'#fff8ef', padding:'2px 10px', borderRadius:8, border:'1px solid #ffd799'}}>
+              ₹{tenderValueSlider}L {tenderValueSlider >= 100 ? `(₹${(tenderValueSlider/100).toFixed(2)} Cr)` : ''}
             </span>
           </div>
-
-          <input 
-            type="range" 
-            min="10" 
-            max="1000" 
-            step="10"
+          <input type="range" min="10" max="1000" step="10"
             value={tenderValueSlider}
-            onChange={(e) => setTenderValueSlider(Number(e.target.value))}
-            className="w-full h-2.5 bg-sandstone-200 rounded-lg appearance-none cursor-pointer accent-saffron-600"
+            onChange={e => setTenderValueSlider(Number(e.target.value))}
+            style={{width:'100%', height:6, accentColor:'#FF9933', cursor:'pointer'}}
           />
-
-          <div className="flex justify-between text-[11px] text-slate-400 font-medium">
-            <span>₹10 Lakhs (Micro Tenders)</span>
-            <span>₹2.5 Cr (Mid-tier RFP)</span>
-            <span>₹10 Crore (Major Enterprise Bid)</span>
+          <div style={{display:'flex',justifyContent:'space-between',fontSize:10,color:'#bbb',marginTop:6}}>
+            <span>₹10L (Micro)</span><span>₹2.5 Cr (Mid)</span><span>₹10 Cr (Enterprise)</span>
           </div>
         </div>
-
       </section>
 
-      {/* 5. SIDE-BY-SIDE: THE OLD PAINFUL WAY VS. TENDERPULSE */}
-      <section className="space-y-6">
-        
-        <div className="text-center max-w-xl mx-auto space-y-1">
-          <h3 className="text-xl sm:text-2xl font-extrabold text-slate-900">
-            Why Indian Businesses Are Switching
-          </h3>
-          <p className="text-xs text-slate-500">
-            The difference between winning government contracts and getting disqualified on Day 1:
-          </p>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-          
-          {/* The Old Painful Way */}
-          <div className="bg-rose-50/70 border-2 border-rose-200 rounded-2xl p-6 space-y-4">
-            <div className="flex items-center gap-2 text-rose-800 font-bold text-sm">
-              <span className="w-6 h-6 rounded-full bg-rose-200 flex items-center justify-center text-rose-900 text-xs">✕</span>
-              <span>The Old, Painful Way (Manual Portal Search)</span>
-            </div>
-
-            <ul className="space-y-3 text-xs text-slate-700">
-              <li className="flex items-start gap-2.5">
-                <span className="text-rose-600 font-bold shrink-0 mt-0.5">✕</span>
-                <span>Spending 40+ hours per week manually refreshing GeM and CPPP portals.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="text-rose-600 font-bold shrink-0 mt-0.5">✕</span>
-                <span>Getting trapped in broken ASP.NET session timeouts and captcha loops.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="text-rose-600 font-bold shrink-0 mt-0.5">✕</span>
-                <span>Reading 120-page RFP PDFs only to discover you miss one small turnover clause.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="text-rose-600 font-bold shrink-0 mt-0.5">✕</span>
-                <span><strong>Disqualified on Day 1</strong> because you missed a corrigendum amendment uploaded 2 days prior.</span>
-              </li>
-            </ul>
-          </div>
-
-          {/* The TenderPulse Way */}
-          <div className="bg-indiaGreen-50/70 border-2 border-indiaGreen-300 rounded-2xl p-6 space-y-4">
-            <div className="flex items-center gap-2 text-indiaGreen-900 font-bold text-sm">
-              <span className="w-6 h-6 rounded-full bg-indiaGreen-200 flex items-center justify-center text-indiaGreen-900 text-xs">✓</span>
-              <span>The TenderPulse Way (Powered by TinyFish)</span>
-            </div>
-
-            <ul className="space-y-3 text-xs text-slate-800">
-              <li className="flex items-start gap-2.5">
-                <span className="text-indiaGreen-700 font-bold shrink-0 mt-0.5">✓</span>
-                <span>TinyFish continuously monitors 15+ portals while you sleep.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="text-indiaGreen-700 font-bold shrink-0 mt-0.5">✓</span>
-                <span>Instant 0–100% Match Score based on your company size, turnover, and Udyam cert.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="text-indiaGreen-700 font-bold shrink-0 mt-0.5">✓</span>
-                <span>Automatic 100% EMD waiver verification under Rule 170 of General Financial Rules.</span>
-              </li>
-              <li className="flex items-start gap-2.5">
-                <span className="text-indiaGreen-700 font-bold shrink-0 mt-0.5">✓</span>
-                <span><strong>Live Corrigendum Watchdog:</strong> Instant alert if dates change or criteria are relaxed.</span>
-              </li>
-            </ul>
-          </div>
-
-        </div>
-
-      </section>
-
-      {/* 6. CALL TO ACTION BANNER */}
-      <section className="bg-gradient-to-r from-saffron-600 to-saffron-700 rounded-3xl p-8 sm:p-12 text-center text-white space-y-5 shadow-lg shadow-saffron-600/20">
-        <h3 className="text-2xl sm:text-3xl font-extrabold tracking-tight">
-          Ready to Discover Your Next Government Contract?
-        </h3>
-        <p className="text-sm text-saffron-100 max-w-lg mx-auto">
-          Start for free today. Select your company category and let TinyFish scan the nation's tenders for you.
+      {/* ── CTA BANNER ── */}
+      <section style={{
+        background:'linear-gradient(135deg, #FF9933, #e07800)',
+        borderRadius:24, padding:'48px 40px', textAlign:'center', color:'#fff'
+      }}>
+        <h3 style={{fontSize:26, fontWeight:900, margin:'0 0 12px', letterSpacing:'-0.5px'}}>{t.ctaBanner}</h3>
+        <p style={{fontSize:13, opacity:0.85, margin:'0 0 24px'}}>
+          {lang === 'en' ? 'Free to start. Select your business type and let TinyFish scan the nation\'s tenders.' : 'शुरू करने के लिए मुफ्त। अपना व्यवसाय प्रकार चुनें और TinyFish को देशभर के टेंडर स्कैन करने दें।'}
         </p>
-        <div className="pt-2">
-          <button
-            onClick={onStartFunnel}
-            className="px-8 py-3.5 bg-white hover:bg-sandstone-100 text-slate-900 font-extrabold text-sm rounded-xl transition shadow-md cursor-pointer inline-flex items-center gap-2 active:scale-95"
-          >
-            <span>Proceed to Business Profile</span>
-            <ArrowRight className="w-4 h-4 text-saffron-600" />
-          </button>
-        </div>
+        <button onClick={onStartFunnel} style={{
+          display:'inline-flex', alignItems:'center', gap:8,
+          background:'#fff', color:'#e07800', fontWeight:800, fontSize:14,
+          padding:'13px 28px', borderRadius:12, border:'none', cursor:'pointer',
+          boxShadow:'0 4px 16px rgba(0,0,0,0.15)'
+        }}>
+          {t.ctaBtn} <ArrowRight style={{width:15,height:15}}/>
+        </button>
       </section>
 
     </div>

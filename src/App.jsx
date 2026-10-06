@@ -5,7 +5,7 @@ import BusinessOnboarding from './components/BusinessOnboarding';
 import TenderRadar from './components/TenderRadar';
 import BidPipelineView from './components/BidPipelineView';
 import TinyFishTerminal from './components/TinyFishTerminal';
-import SlideVisualizer from './components/SlideVisualizer';
+
 import TenderDetailsModal from './components/TenderDetailsModal';
 import AuthModal from './components/AuthModal';
 import { MOCK_TENDERS, INITIAL_COMPANY_PROFILE, DEMO_PERSONAS } from './data/mockTenders';
@@ -122,69 +122,93 @@ export default function App() {
 
       {/* Main Spacious Content Canvas */}
       <main className="flex-1 max-w-7xl w-full mx-auto px-4 lg:px-8 py-6">
-        
-        {/* Tab 1: How It Works, Visual Process & Business Categorization */}
+
+        {/* Tab 1: Overview */}
         {activeTab === 'home' && (
-          <LandingHero 
+          <LandingHero
             onStartFunnel={() => setActiveTab('onboarding')}
             onSelectPersona={handleLandingPersonaSelect}
           />
         )}
 
-        {/* Tab 2: Business Profile & Qualification Setup */}
+        {/* Tab 2: Business Profile */}
         {activeTab === 'onboarding' && (
-          <BusinessOnboarding 
-            onCompleteOnboarding={handleCompleteOnboarding}
-            currentProfile={companyProfile}
-          />
+          <div style={{display:'flex', flexDirection:'column', gap:20}}>
+            <FeatureBanner
+              icon="🏢"
+              title="Business Profile Setup"
+              desc="Tell TenderPulse about your company — your size, turnover, and certifications. This takes under 60 seconds and unlocks personalised tender matching and automatic EMD waiver detection."
+              stats={[['30 sec','Setup time'],['3 Personas','MSME · Startup · Contractor'],['100%','EMD waiver if eligible']]}
+              color="#FF9933"
+            />
+            <BusinessOnboarding
+              onCompleteOnboarding={handleCompleteOnboarding}
+              currentProfile={companyProfile}
+            />
+          </div>
         )}
 
-        {/* Tab 3: Matched Tenders Radar */}
+        {/* Tab 3: Tender Radar */}
         {activeTab === 'radar' && (
-          <TenderRadar 
-            tenders={tenders}
-            onSelectTender={(tender) => setSelectedTender(tender)}
-            companyProfile={companyProfile}
-            onOpenHowItWorks={() => setActiveTab('home')}
-          />
+          <div style={{display:'flex', flexDirection:'column', gap:20}}>
+            <FeatureBanner
+              icon="📡"
+              title="Tender Radar — Live Matching Engine"
+              desc="TinyFish continuously scans GeM, CPPP, Indian Railways (IREPS), and state portals 24/7. Every tender is scored 0–100% against your company profile. Green = qualified. Yellow = borderline. Red = ineligible."
+              stats={[['15+ Portals','Monitored 24/7'],['97%','HTML noise removed'],['10 sec','Match score generated']]}
+              color="#138808"
+            />
+            <TenderRadar
+              tenders={tenders}
+              onSelectTender={(tender) => setSelectedTender(tender)}
+              companyProfile={companyProfile}
+              onOpenHowItWorks={() => setActiveTab('home')}
+            />
+          </div>
         )}
 
-        {/* Tab 4: Bid Kit & Rule 170 GFR EMD Exemption Generator */}
+        {/* Tab 4: Bid Kit */}
         {activeTab === 'pipeline' && (
-          <BidPipelineView 
-            tenders={tenders}
-            onSelectTender={(tender) => setSelectedTender(tender)}
-            companyProfile={companyProfile}
-          />
+          <div style={{display:'flex', flexDirection:'column', gap:20}}>
+            <FeatureBanner
+              icon="📄"
+              title="Bid Kit & GFR Rule 170 EMD Waiver Generator"
+              desc="Once you've found a matching tender, this tool auto-generates your legal exemption letter under Ministry of Finance General Financial Rules (GFR) 2017 Rule 170. Startups and MSMEs can submit this letter to get 100% Earnest Money Deposit waived — saving lakhs upfront per bid."
+              stats={[['₹0 EMD','For eligible businesses'],['GFR 2017','Rule 170 compliant letters'],['10+ hrs','Saved per bid']]}
+              color="#b06000"
+            />
+            <BidPipelineView
+              tenders={tenders}
+              onSelectTender={(tender) => setSelectedTender(tender)}
+              companyProfile={companyProfile}
+            />
+          </div>
         )}
 
-        {/* Tab 5: TinyFish Web Automation Live Intelligence Console */}
+        {/* Tab 5: TinyFish Engine */}
         {activeTab === 'tinyfish' && (
-          <TinyFishTerminal />
-        )}
-
-        {/* Tab 6: Round 1 & 2 PPT Presentation Deck */}
-        {activeTab === 'slides' && (
-          <SlideVisualizer />
+          <div style={{display:'flex', flexDirection:'column', gap:20}}>
+            <FeatureBanner
+              icon="🐟"
+              title="TinyFish Engine — Live API Intelligence Console"
+              desc="Watch in real-time as TinyFish executes its 4-step pipeline: web_fetch fetches raw government portal HTML, parse_html strips 97% of bloat, extract_json structures the tender data, and diff_content detects corrigenda (amendments). This console shows live token usage and cost savings vs raw GPT-4 calls."
+              stats={[['73%','Token cost saved'],['4 Steps','fetch → parse → extract → diff'],['Real-time','Live pipeline telemetry']]}
+              color="#1a1a8c"
+            />
+            <TinyFishTerminal />
+          </div>
         )}
 
       </main>
 
-      {/* Authorized National Footer */}
-      <footer className="border-t border-sandstone-200 bg-white py-6 px-4 text-xs text-slate-500 mt-10">
-        <div className="max-w-7xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
-          <div className="flex items-center gap-2">
-            <span className="font-extrabold text-slate-900">TenderPulse</span>
-            <span>• National B2B Procurement Intelligence for Indian MSMEs & Startups</span>
+      {/* Footer */}
+      <footer style={{borderTop:'1px solid #e8e0d0', background:'#fff', padding:'20px 24px', marginTop:40}}>
+        <div style={{maxWidth:1200, margin:'0 auto', display:'flex', alignItems:'center', justifyContent:'space-between', flexWrap:'wrap', gap:12}}>
+          <div style={{display:'flex', alignItems:'center', gap:8}}>
+            <span style={{fontWeight:800, fontSize:13, color:'#1a1a1a'}}>TenderPulse</span>
+            <span style={{fontSize:11, color:'#aaa'}}>B2B Procurement Intelligence · India</span>
           </div>
-
-          <div className="flex items-center gap-2 text-indiaGreen-800 bg-indiaGreen-50 px-3 py-1 rounded-full border border-indiaGreen-300 font-bold text-[11px]">
-            <span>Powered by TinyFish Web Automation API</span>
-          </div>
-
-          <div className="flex items-center gap-2">
-            <span>🇮🇳 HackIIITD 2026 • Open Innovation</span>
-          </div>
+          <span style={{fontSize:11, color:'#bbb'}}>🇮🇳 HackIIITD 2026 · Built with TinyFish API</span>
         </div>
       </footer>
 
