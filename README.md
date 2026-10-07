@@ -99,7 +99,7 @@ Step 4: diff_content(old, new)   → Detects corrigenda/amendments automatically
 ### Installation
 
 ```bash
-git clone https://github.com/YOUR_USERNAME/tenderpulse.git
+git clone https://github.com/riddhi-sisodia/tenderpulse.git
 cd tenderpulse
 npm install
 npm run dev
