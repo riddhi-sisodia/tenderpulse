@@ -1,6 +1,6 @@
 # 🇮🇳 TenderPulse — AI-Powered Procurement Intelligence for Indian MSMEs
 
-> **HackIIITD Submission** | Team: Riddhi Sisodia & Ansh Kaushik
+
 
 [![Vite](https://img.shields.io/badge/Vite-8.x-646CFF?logo=vite&logoColor=white)](https://vitejs.dev)
 [![React](https://img.shields.io/badge/React-19.x-61DAFB?logo=react&logoColor=black)](https://react.dev)
