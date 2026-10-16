@@ -1,3 +1,4 @@
+import FeatureBanner from './components/FeatureBanner';
 import React, { useState } from 'react';
 import Header from './components/Header';
 import LandingHero from './components/LandingHero';
